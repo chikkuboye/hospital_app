@@ -142,6 +142,19 @@ public class Hospital {
                     break;
                 case 5:
                     System.out.println("Delete the data");
+                    System.out.println("Enter the patient Id");
+                    id = hos.nextInt();
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_db","root","");
+                        String sql = "DELETE FROM `patients` WHERE `Patient_id`="+id;
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate(sql);
+                        System.out.println("Deleted successfully");
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
                     break;
                 case 6:
                     System.exit(0);
