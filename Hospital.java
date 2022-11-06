@@ -12,7 +12,9 @@ public class Hospital {
             System.out.println("3 .Search");
             System.out.println("4 .Update");
             System.out.println("5 .Delete");
-            System.out.println("6 .Exit");
+            System.out.println("6 .Number of doctor");
+            System.out.println("7 .Name of doctor who consult fever");
+            System.out.println("8 .Exit");
 
             choice = hos.nextInt();
 
@@ -157,6 +159,46 @@ public class Hospital {
                     }
                     break;
                 case 6:
+                    System.out.println("Number of doctors");
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_db","root","");
+                        String sql = "SELECT COUNT(*) AS number,`Doctor_Name` FROM `patients` GROUP BY `Doctor_Name`";
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while (rs.next()){
+                            String getCount = rs.getString("number");
+                            String getDoc = rs.getString("Doctor_Name");
+                            System.out.println("Number of patients consult to this doctor is +"+getCount);
+                            System.out.println("Name of doctor ="+getDoc+'\n');
+
+                        }
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
+                    break;
+                case 7:
+                    System.out.println("Name of doctor who consult fever");
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_db","root","");
+                        String sql = "SELECT COUNT(*) AS number,`Doctor_Name` FROM `patients` WHERE `Symptoms`='fever' GROUP BY `Doctor_Name`";
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while (rs.next()){
+                            String getCount = rs.getString("number");
+                            String getDoc = rs.getString("Doctor_Name");
+                            System.out.println("Number of patients consult to this doctor for fever +"+getCount);
+                            System.out.println("Name of doctor ="+getDoc+'\n');
+
+                        }
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
+                    break;
+                case 8:
                     System.exit(0);
             }
         }
